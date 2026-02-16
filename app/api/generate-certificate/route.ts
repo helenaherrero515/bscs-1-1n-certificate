@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { PDFDocument, rgb } from "pdf-lib"
 import fontkit from "@pdf-lib/fontkit"
-import { readFile } from "fs/promises"
-import path from "path"
 import studentsData from "@/data/students.json"
 
 interface Student {
@@ -13,13 +11,14 @@ interface Student {
 
 const students: Student[] = studentsData as Student[]
 
-// Load Poppins Bold TTF from disk (cached after first read)
-let poppinsBoldBuffer: Buffer | null = null
-async function getPoppinsBold(): Promise<Buffer> {
-  if (poppinsBoldBuffer) return poppinsBoldBuffer
-  const fontPath = path.join(process.cwd(), "public", "fonts", "Poppins-Bold.ttf")
-  poppinsBoldBuffer = await readFile(fontPath)
-  return poppinsBoldBuffer
+// Cache fetched assets in memory across requests
+let poppinsBoldCache: ArrayBuffer | null = null
+const templateCache: Record<string, ArrayBuffer> = {}
+
+async function fetchAsset(url: string): Promise<ArrayBuffer> {
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`)
+  return res.arrayBuffer()
 }
 
 export async function POST(request: NextRequest) {
@@ -48,27 +47,33 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Load the certificate template image (PNG)
+    // Build the base URL from the incoming request
+    const origin = request.nextUrl.origin
+
+    // Fetch the certificate template PNG via HTTP (works on Vercel)
     const templateFileName =
       award === "PL" ? "certificate_pl.png" : "certificate_dl.png"
-    const templatePath = path.join(
-      process.cwd(),
-      "public",
-      "certificates",
-      templateFileName
-    )
-    const templateBytes = await readFile(templatePath)
+    const templateUrl = `${origin}/certificates/${templateFileName}`
+
+    if (!templateCache[templateFileName]) {
+      templateCache[templateFileName] = await fetchAsset(templateUrl)
+    }
+    const templateBytes = templateCache[templateFileName]
+
+    // Fetch the Poppins Bold font via HTTP
+    if (!poppinsBoldCache) {
+      poppinsBoldCache = await fetchAsset(`${origin}/fonts/Poppins-Bold.ttf`)
+    }
 
     // Create PDF and register fontkit for custom fonts
     const pdfDoc = await PDFDocument.create()
     pdfDoc.registerFontkit(fontkit)
 
     // Embed the Poppins Bold font
-    const poppinsBytes = await getPoppinsBold()
-    const poppinsFont = await pdfDoc.embedFont(poppinsBytes)
+    const poppinsFont = await pdfDoc.embedFont(new Uint8Array(poppinsBoldCache))
 
     // Embed the template image as PNG
-    const templateImage = await pdfDoc.embedPng(templateBytes)
+    const templateImage = await pdfDoc.embedPng(new Uint8Array(templateBytes))
     const imgDims = templateImage.scale(1)
 
     // Use landscape orientation matching the certificate template
@@ -86,7 +91,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Draw the student name in Poppins Bold at 110pt
-    // White fill with light baby blue stroke (simulated via offset draws)
+    // White fill with #6B8EFF stroke (simulated via offset draws)
     const nameFontSize = 110
     const nameWidth = poppinsFont.widthOfTextAtSize(student.name, nameFontSize)
     const nameHeight = poppinsFont.heightAtSize(nameFontSize)
