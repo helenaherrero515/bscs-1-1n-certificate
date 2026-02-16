@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { PDFDocument, rgb } from "pdf-lib"
 import fontkit from "@pdf-lib/fontkit"
+import { readFileSync, existsSync } from "fs"
+import path from "path"
 import studentsData from "@/data/students.json"
 
 interface Student {
@@ -11,14 +13,33 @@ interface Student {
 
 const students: Student[] = studentsData as Student[]
 
-// Cache fetched assets in memory across requests
-let poppinsBoldCache: ArrayBuffer | null = null
-const templateCache: Record<string, ArrayBuffer> = {}
+// Google Fonts CDN URL for Poppins Bold TTF
+const POPPINS_BOLD_URL =
+  "https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/Poppins-Bold.ttf"
 
-async function fetchAsset(url: string): Promise<ArrayBuffer> {
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`)
-  return res.arrayBuffer()
+// Cache assets in memory
+let poppinsBoldCache: ArrayBuffer | null = null
+const templateCache: Record<string, Buffer> = {}
+
+function loadTemplateFromDisk(fileName: string): Buffer {
+  // Try multiple possible paths where Vercel might place public assets
+  const possiblePaths = [
+    path.join(process.cwd(), "public", "certificates", fileName),
+    path.join(process.cwd(), ".next", "static", "certificates", fileName),
+    path.join("/var/task", "public", "certificates", fileName),
+    path.join("/var/task", ".next", "server", "app", "certificates", fileName),
+  ]
+
+  for (const p of possiblePaths) {
+    if (existsSync(p)) {
+      console.log(`[v0] Found template at: ${p}`)
+      return readFileSync(p)
+    }
+  }
+
+  throw new Error(
+    `Template ${fileName} not found. Tried: ${possiblePaths.join(", ")}`
+  )
 }
 
 export async function POST(request: NextRequest) {
@@ -47,22 +68,24 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Build the base URL from the incoming request
-    const origin = request.nextUrl.origin
-
-    // Fetch the certificate template PNG via HTTP (works on Vercel)
+    // Load certificate template from disk (works on both local and Vercel)
     const templateFileName =
       award === "PL" ? "certificate_pl.png" : "certificate_dl.png"
-    const templateUrl = `${origin}/certificates/${templateFileName}`
 
     if (!templateCache[templateFileName]) {
-      templateCache[templateFileName] = await fetchAsset(templateUrl)
+      templateCache[templateFileName] = loadTemplateFromDisk(templateFileName)
     }
     const templateBytes = templateCache[templateFileName]
 
-    // Fetch the Poppins Bold font via HTTP
+    // Fetch Poppins Bold from Google Fonts CDN (avoids self-fetch issue on Vercel)
     if (!poppinsBoldCache) {
-      poppinsBoldCache = await fetchAsset(`${origin}/fonts/Poppins-Bold.ttf`)
+      console.log("[v0] Fetching Poppins Bold from CDN...")
+      const fontRes = await fetch(POPPINS_BOLD_URL)
+      if (!fontRes.ok) {
+        throw new Error(`Failed to fetch Poppins Bold: ${fontRes.status}`)
+      }
+      poppinsBoldCache = await fontRes.arrayBuffer()
+      console.log("[v0] Poppins Bold fetched successfully")
     }
 
     // Create PDF and register fontkit for custom fonts
@@ -143,9 +166,12 @@ export async function POST(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error("Certificate generation error:", error)
+    console.error("[v0] Certificate generation error:", error)
     return NextResponse.json(
-      { error: "Failed to generate certificate." },
+      {
+        error: "Failed to generate certificate.",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     )
   }
