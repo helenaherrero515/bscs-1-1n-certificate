@@ -1,0 +1,10 @@
+[
+  { "name": "Juan Dela Cruz", "student_id": "2025-00001-MN-0", "award": "PL" },
+  { "name": "Maria Santos", "student_id": "2025-00002-MN-0", "award": "DL" },
+  { "name": "Jose Rizal Jr.", "student_id": "2025-00003-MN-0", "award": "PL" },
+  { "name": "Ana Marie Garcia", "student_id": "2025-00004-MN-0", "award": "DL" },
+  { "name": "Carlos Reyes", "student_id": "2025-00005-MN-0", "award": "PL" },
+  { "name": "Isabella Cruz", "student_id": "2025-00006-MN-0", "award": "DL" },
+  { "name": "Miguel Antonio Torres", "student_id": "2025-00007-MN-0", "award": "PL" },
+  { "name": "Sofia Ramirez", "student_id": "2025-00008-MN-0", "award": "DL" }
+]
