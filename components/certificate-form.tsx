@@ -62,6 +62,10 @@ export function CertificateForm() {
         name: student.name,
         student_id: student.student_id,
         award: student.award,
+<<<<<<< HEAD
+=======
+        gpa: student.gpa,
+>>>>>>> v3
       })
       router.push(`/result?${params.toString()}`)
     } catch {

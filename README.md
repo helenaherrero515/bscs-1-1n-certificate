@@ -84,6 +84,22 @@ Edit `data/students.json` to add, remove, or update students. Each entry has thr
 
 - `award` must be either `"PL"` (President's Lister) or `"DL"` (Dean's Lister).
 
+<<<<<<< HEAD
+=======
+## Customization
+
+- **Background image** -- Replace `public/web_background.png` with your own image.
+- **Certificate templates** -- Replace `public/certificates/certificate_pl.png` and `certificate_dl.png`.
+- **Facebook page link** -- Update the URL in `components/header.tsx`.
+
+## Deployment
+
+This project is ready to deploy on [Vercel](https://vercel.com):
+
+1. Push your code to a **private** GitHub repository (to protect student data).
+2. Go to [vercel.com](https://vercel.com) and import the repository.
+3. Click **Deploy** -- Vercel auto-detects Next.js.
+>>>>>>> v3
 
 ## License
 
