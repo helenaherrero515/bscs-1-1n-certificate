@@ -1,0 +1,11 @@
+[
+  { "name": "Juan Dela Cruz", "student_id": "2025-00001-MN-0", "award": "PL", "gpa": "1.25" },
+  { "name": "Maria Santos", "student_id": "2025-00002-MN-0", "award": "DL", "gpa": "1.50" },
+  { "name": "Jose Rizal Jr.", "student_id": "2025-00003-MN-0", "award": "PL", "gpa": "1.20" },
+  { "name": "Ana Marie Garcia", "student_id": "2025-00004-MN-0", "award": "DL", "gpa": "1.55" },
+  { "name": "Carlos Reyes", "student_id": "2025-00005-MN-0", "award": "PL", "gpa": "1.10" },
+  { "name": "Isabella Cruz", "student_id": "2025-00006-MN-0", "award": "DL", "gpa": "1.60" },
+  { "name": "Miguel Antonio Torres", "student_id": "2025-00007-MN-0", "award": "PL", "gpa": "1.15" },
+  { "name": "Sofia Ramirez", "student_id": "2025-00008-MN-0", "award": "DL", "gpa": "1.45" },
+  { "name": "Lord Zierwin Balajadia", "student_id": "2025-03354-MN-0", "award": "PL", "gpa": "1.05" }
+]
