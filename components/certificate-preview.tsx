@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-"use client"
-
-import { useState } from "react"
-import Image from "next/image"
-import { Download, Loader2, Trophy, Medal } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-=======
 'use client'
 
 import { useRef, useState } from 'react'
@@ -20,17 +7,12 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
->>>>>>> v3
 
 interface StudentResult {
   name: string
   student_id: string
-<<<<<<< HEAD
-  award: "PL" | "DL"
-=======
   award: 'PL' | 'DL'
   gpa: string
->>>>>>> v3
 }
 
 interface CertificatePreviewProps {
@@ -38,48 +20,6 @@ interface CertificatePreviewProps {
 }
 
 export function CertificatePreview({ student }: CertificatePreviewProps) {
-<<<<<<< HEAD
-  const [downloading, setDownloading] = useState(false)
-
-  const awardLabel =
-    student.award === "PL" ? "President's Lister" : "Dean's Lister"
-  const templateSrc =
-    student.award === "PL"
-      ? "/certificates/certificate_pl.png"
-      : "/certificates/certificate_dl.png"
-
-  async function handleDownload() {
-    setDownloading(true)
-    try {
-      const res = await fetch("/api/generate-certificate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: student.name,
-          student_id: student.student_id,
-          award: student.award,
-        }),
-      })
-
-      if (!res.ok) {
-        throw new Error("Failed to generate certificate.")
-      }
-
-      const blob = await res.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `Certificate_${student.award}_${student.name.replace(/\s+/g, "_")}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      window.URL.revokeObjectURL(url)
-    } catch (err) {
-      console.error(err)
-      alert("Failed to generate certificate. Please try again.")
-    } finally {
-      setDownloading(false)
-=======
   const certRef = useRef<HTMLDivElement>(null)
   const [isDownloading, setIsDownloading] = useState(false)
 
@@ -105,12 +45,9 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
 
       const imgData = canvas.toDataURL('image/png', 1.0)
       
-      // Calculate dimensions in mm (1px = 0.264583mm)
-      // We divide by the scale (4) to get the original intended CSS size in mm
       const imgWidthMm = (canvas.width * 0.264583) / 4
       const imgHeightMm = (canvas.height * 0.264583) / 4
 
-      // Create PDF with EXACT dimensions of the certificate
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
@@ -149,32 +86,10 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
       alert('Failed to download PNG.')
     } finally {
       setIsDownloading(false)
->>>>>>> v3
     }
   }
 
   return (
-<<<<<<< HEAD
-    <Card className="border-card-foreground/10 bg-card/80 shadow-xl backdrop-blur-sm">
-      <CardContent className="flex flex-col gap-5 pt-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-card-foreground">
-            {student.award === "PL" ? (
-              <Trophy className="h-5 w-5 text-gold" />
-            ) : (
-              <Medal className="h-5 w-5 text-primary" />
-            )}
-            <span className="font-semibold">{student.name}</span>
-          </div>
-          <Badge
-            variant="secondary"
-            className={
-              student.award === "PL"
-                ? "bg-gold/20 text-card-foreground border border-gold/30"
-                : "bg-primary/15 text-card-foreground border border-primary/25"
-            }
-          >
-=======
     <Card className="border-white/10 bg-white/5 shadow-xl backdrop-blur-sm">
       <CardContent className="flex flex-col gap-6 pt-6">
         <div className="flex items-center justify-between rounded-lg border-b border-white/10 pb-4">
@@ -189,145 +104,91 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             </span>
           </div>
           <Badge className={`${awardBg} border-0 font-semibold`}>
->>>>>>> v3
             {awardLabel}
           </Badge>
         </div>
 
-<<<<<<< HEAD
-        <div className="relative overflow-hidden rounded-lg border border-card-foreground/10">
-          <div className="relative aspect-[1.414/1] w-full">
-            <Image
-              src={templateSrc}
-              alt={`${awardLabel} certificate for ${student.name}`}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="object-contain"
-              priority
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="-translate-y-[8%] text-center">
-                <p
-                  className="font-display text-2xl font-bold tracking-wide sm:text-4xl md:text-5xl"
-                  style={{
-                    color: "#ffffff",
-                    WebkitTextStroke: "2px #6B8EFF",
-                    paintOrder: "stroke fill",
-                    textShadow: "0 2px 8px rgba(0,0,0,0.15)",
-                  }}
-                >
-                  {student.name}
+        {/* Certificate Preview Container */}
+        <div className="relative w-full overflow-hidden rounded-lg shadow-2xl border border-white/5">
+          <div
+            ref={certRef}
+            className="relative w-full overflow-hidden"
+            style={{
+              aspectRatio: '16 / 10',
+              backgroundImage: "url('/certificate_bg.png')",
+              backgroundSize: '100% 100%',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Logo Section */}
+            <div className="absolute left-1/2 top-[6%] -translate-x-1/2">
+              <img
+                src="/logo.png"
+                alt="Class Logo"
+                className="h-auto w-24 drop-shadow-lg md:w-32"
+                crossOrigin="anonymous"
+              />
+            </div>
+
+            {/* Dynamic Text Overlay */}
+            <div className="absolute inset-0 flex flex-col items-center px-[10%] text-center">
+              
+              <h2 
+                className="absolute top-[24%] w-full font-sans font-bold italic text-white"
+                style={{
+                  fontSize: 'clamp(1rem, 4vw, 2.8rem)',
+                  textShadow: '0 0 10px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.3)',
+                }}
+              >
+                Certificate of Recognition
+              </h2>
+
+              {/* Adjusted top position to 38% to create space */}
+              <p className="absolute top-[40%] w-full text-[8px] font-bold uppercase tracking-widest text-white/90 sm:text-[10px] md:text-xs">
+                This certificate is awarded to
+              </p>
+
+              {/* Added underline and moved to 42% */}
+              <p
+                className="absolute top-[40%] w-full font-display font-bold text-white"
+                style={{
+                  WebkitTextStroke: '1px #031642', 
+                  paintOrder: 'stroke fill',
+                  textShadow: '0 4px 10px rgba(0,0,0,0.4)',
+                  fontSize: 'clamp(1.2rem, 5.5vw, 3.5rem)',
+                }}
+              >
+                {student.name}
+              </p>
+
+              <p className="absolute top-[60%] w-full text-[8px] font-bold text-white/90 sm:text-sm">
+                from BSCS 1-1N
+              </p>
+
+              {/* Description Paragraphs */}
+              <div className="absolute top-[66%] flex w-[75%] flex-col gap-1 md:gap-2">
+                <p className="text-[7px] leading-tight text-white sm:text-[9px] md:text-[12px] lg:text-[13px]">
+                  With a General Weighted Average (GWA) of{' '}
+                  <strong className="font-bold underline underline-offset-1">{student.gpa}</strong>,
+                  this certifies that the student is a Bachelor of Science in Computer
+                  Science student at the{' '}
+                  <strong className="font-bold">Polytechnic University of the Philippines</strong>, 
+                  who has demonstrated outstanding academic performance.
+                </p>
+
+                <p className="text-[7px] leading-tight text-white sm:text-[9px] md:text-[12px] lg:text-[13px]">
+                  In recognition of high scholastic achievement, the distinction of{' '}
+                  <strong className="font-bold">{awardLabel}</strong> is hereby
+                  conferred for the First Semester of{' '}
+                  <strong className="font-bold italic">A.Y. 2025–2026</strong>.
                 </p>
               </div>
-=======
-        <div
-          ref={certRef}
-          className="relative w-full overflow-hidden rounded-lg shadow-2xl"
-          style={{
-            aspectRatio: '16 / 10',
-            backgroundImage: "url('/certificate_bg.png')",
-            backgroundSize: '100% 100%',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute left-1/2 top-4 -translate-x-1/2">
-            <img
-              src="/logo.png"
-              alt="Class Logo"
-              className="h-auto w-28 drop-shadow-lg md:w-40"
-              crossOrigin="anonymous"
-            />
-          </div>
-
-          <div className="absolute inset-0 flex flex-col items-center px-8 text-center">
-            
-            <h2 
-              className="absolute top-[20%] w-full font-sans font-bold italic text-white"
-              style={{
-                fontSize: 'clamp(1.2rem, 4.5vw, 3.2rem)',
-                textShadow: '0 0 15px rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.3)',
-                letterSpacing: '0.02em'
-              }}
-            >
-              Certificate of Recognition
-            </h2>
-
-            {/* Separated positions to prevent overlap */}
-            <p
-              className="absolute top-[38%] w-full text-[10px] font-bold uppercase tracking-widest text-white/90 sm:text-xs"
-              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
-            >
-              This certificate is awarded to
-            </p>
-
-            <p
-              className="absolute top-[40%] w-full font-display font-bold text-white"
-              style={{
-                WebkitTextStroke: '1.2px #4A90E2', 
-                paintOrder: 'stroke fill',
-                textShadow: '0 4px 12px rgba(0,0,0,0.4)',
-                fontSize: 'clamp(1.5rem, 6vw, 4rem)',
-                lineHeight: '1',
-              }}
-            >
-              {student.name}
-            </p>
-
-            <p
-              className="absolute top-[60%] w-full text-[10px] font-bold text-white/90 sm:text-sm"
-              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
-            >
-              from BSCS 1-1N
-            </p>
-
-            <div className="absolute top-[65%] flex w-[70%] flex-col gap-3">
-              <p
-                className="text-[9px] leading-relaxed text-white sm:text-[10px] md:text-[13px]"
-                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}
-              >
-                With a General Weighted Average (GWA) of{' '}
-                <strong className="font-bold underline underline-offset-2">{student.gpa}</strong>,
-                this certifies that the student is a Bachelor of Science in Computer
-                Science student at the{' '}
-                <strong className="font-bold">Polytechnic University of the Philippines</strong>, 
-                who has demonstrated outstanding academic performance and consistent 
-                excellence throughout the semester.
-              </p>
-
-              <p
-                className="text-[9px] leading-relaxed text-white sm:text-[10px] md:text-[13px]"
-                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}
-              >
-                In recognition of high scholastic achievement, the distinction of{' '}
-                <strong className="font-bold">{awardLabel}</strong> is hereby
-                conferred for the First Semester of{' '}
-                <strong className="font-bold italic">A.Y. 2025–2026</strong>.
-              </p>
->>>>>>> v3
             </div>
           </div>
         </div>
 
-<<<<<<< HEAD
-        <Button
-          onClick={handleDownload}
-          disabled={downloading}
-          size="lg"
-          className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
-        >
-          {downloading ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Generating PDF...
-            </>
-          ) : (
-            <>
-              <Download className="h-4 w-4" />
-              Download PDF
-            </>
-          )}
-        </Button>
-=======
+        {/* Action Buttons */}
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button
             onClick={downloadPDF}
@@ -336,20 +197,19 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             className="flex-1 gap-2 bg-gradient-to-r from-green-700 to-green-600 text-white hover:from-green-800 hover:to-green-700"
           >
             <Download className="h-5 w-5" />
-            {isDownloading ? 'Optimizing...' : 'Download PDF'}
+            {isDownloading ? 'Processing...' : 'Download PDF'}
           </Button>
           <Button
             onClick={downloadPNG}
             disabled={isDownloading}
             size="lg"
             variant="outline"
-            className="flex-1 gap-2"
+            className="flex-1 gap-2 text-white border-white/20 hover:bg-white/10"
           >
             <FileImage className="h-5 w-5" />
-            {isDownloading ? 'Optimizing...' : 'Download PNG'}
+            {isDownloading ? 'Processing...' : 'Download PNG'}
           </Button>
         </div>
->>>>>>> v3
       </CardContent>
     </Card>
   )
