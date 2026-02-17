@@ -145,7 +145,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
               </h2>
 
               {/* Adjusted top position to 38% to create space */}
-              <p className="absolute top-[41%] w-full text-[8px] font-bold uppercase tracking-widest text-white/90 sm:text-[10px] md:text-xs">
+              <p className="absolute top-[40%] w-full text-[8px] font-bold uppercase tracking-widest text-white/90 sm:text-[10px] md:text-xs">
                 This certificate is awarded to
               </p>
 
