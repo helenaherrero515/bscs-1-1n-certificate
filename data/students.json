@@ -6,5 +6,6 @@
   { "name": "Carlos Reyes", "student_id": "2025-00005-MN-0", "award": "PL" },
   { "name": "Isabella Cruz", "student_id": "2025-00006-MN-0", "award": "DL" },
   { "name": "Miguel Antonio Torres", "student_id": "2025-00007-MN-0", "award": "PL" },
-  { "name": "Sofia Ramirez", "student_id": "2025-00008-MN-0", "award": "DL" }
+  { "name": "Sofia Ramirez", "student_id": "2025-00008-MN-0", "award": "DL" },
+  { "name": "Lord Zierwin Balajadia", "student_id": "2025-03354-MN-0","award": "PL"}
 ]
