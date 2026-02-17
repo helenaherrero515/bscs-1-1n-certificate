@@ -135,7 +135,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             <div className="absolute inset-0 flex flex-col items-center px-[10%] text-center">
               
               <h2 
-                className="absolute top-[28%] w-full font-sans font-bold italic text-white"
+                className="absolute top-[26%] w-full font-sans font-bold italic text-white"
                 style={{
                   fontSize: 'clamp(1rem, 4vw, 2.8rem)',
                   textShadow: '0 0 10px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.3)',
@@ -145,7 +145,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
               </h2>
 
               {/* Adjusted top position to 38% to create space */}
-              <p className="absolute top-[40%] w-full text-[8px] font-bold uppercase tracking-widest text-white/90 sm:text-[10px] md:text-xs">
+              <p className="absolute top-[41%] w-full text-[8px] font-bold uppercase tracking-widest text-white/90 sm:text-[10px] md:text-xs">
                 This certificate is awarded to
               </p>
 
