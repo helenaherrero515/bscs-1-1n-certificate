@@ -26,12 +26,12 @@ function ResultContent() {
             {"We couldn't find your record. Please go back and ensure your Student ID matches the class list."}
           </p>
         </div>
-        <button asChild variant="outline" className="gap-2">
+        <Button asChild variant="outline" className="gap-2 border-white/20 bg-white/10 text-white hover:bg-white/20">
           <Link href="/">
             <ArrowLeft className="h-4 w-4" />
             Return to Search
           </Link>
-        </button>
+        </Button>
       </div>
     )
   }
@@ -40,14 +40,14 @@ function ResultContent() {
 
   return (
     <main className="flex flex-1 items-center justify-center py-8">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-6">
 
         {/* Top Navigation & Status */}
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Button
             asChild
             variant="ghost"
-            className="group gap-2 text-white/70 hover:text-white"
+            className="group gap-2 text-white/90 hover:text-white hover:bg-white/10"
           >
             <Link href="/">
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -61,10 +61,8 @@ function ResultContent() {
           </div>
         </div>
 
-        {/* Certificate Display Area */}
-        <div className="relative">
-          <CertificatePreview student={student} />
-        </div>
+        {/* Certificate Display Area - Using CertificatePreview directly to avoid double squaring */}
+        <CertificatePreview student={student} />
 
       </div>
     </main>
@@ -80,22 +78,23 @@ export default function ResultPage() {
         style={{ backgroundImage: "url('/web_background.png')" }}
         aria-hidden="true"
       />
-      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-black/20 via-transparent to-black/40 backdrop-blur-[2px]" aria-hidden="true" />
+      {/* Fixed dark overlay to make the result card pop */}
+      <div className="fixed inset-0 -z-10 bg-black/10" aria-hidden="true" />
 
       <Header />
 
       <Suspense fallback={
         <div className="flex flex-1 items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-muted border-t-primary" />
-            <p className="font-medium text-white/60">{"Retrieving Certificate..."}</p>
+          <div className="flex flex-col items-center gap-4 text-white">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white" />
+            <p className="font-medium opacity-60">{"Retrieving Certificate..."}</p>
           </div>
         </div>
       }>
         <ResultContent />
       </Suspense>
 
-      <footer className="mt-auto w-full border-t border-white/10 bg-black/40 py-6 text-center backdrop-blur-md">
+      <footer className="mt-auto w-full border-t border-white/10 bg-black/60 py-6 text-center backdrop-blur-md">
         <p className="text-[10px] font-medium uppercase tracking-widest text-white/40">
           {"BSCS 1-1N \u2022 Academic Year 2025\u20132026"}
         </p>

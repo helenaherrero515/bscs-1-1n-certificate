@@ -122,11 +122,11 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             }}
           >
             {/* Logo Section */}
-            <div className="absolute left-1/2 top-[6%] -translate-x-1/2">
+            <div className="absolute left-1/2 top-[5%] -translate-x-1/2">
               <img
                 src="/logo.png"
                 alt="Class Logo"
-                className="h-auto w-24 drop-shadow-lg md:w-32"
+                className="h-auto w-40 drop-shadow-lg md:w-33"
                 crossOrigin="anonymous"
               />
             </div>
@@ -135,7 +135,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             <div className="absolute inset-0 flex flex-col items-center px-[10%] text-center">
               
               <h2 
-                className="absolute top-[24%] w-full font-sans font-bold italic text-white"
+                className="absolute top-[28%] w-full font-sans font-bold italic text-white"
                 style={{
                   fontSize: 'clamp(1rem, 4vw, 2.8rem)',
                   textShadow: '0 0 10px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.3)',
@@ -145,18 +145,18 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
               </h2>
 
               {/* Adjusted top position to 38% to create space */}
-              <p className="absolute top-[40%] w-full text-[8px] font-bold uppercase tracking-widest text-white/90 sm:text-[10px] md:text-xs">
+              <p className="absolute top-[41%] w-full text-[8px] font-bold uppercase tracking-widest text-white/90 sm:text-[10px] md:text-xs">
                 This certificate is awarded to
               </p>
 
               {/* Added underline and moved to 42% */}
               <p
-                className="absolute top-[40%] w-full font-display font-bold text-white"
+                className="absolute top-[39.5%] w-full font-display font-bold text-white"
                 style={{
                   WebkitTextStroke: '1px #031642', 
                   paintOrder: 'stroke fill',
                   textShadow: '0 4px 10px rgba(0,0,0,0.4)',
-                  fontSize: 'clamp(1.2rem, 5.5vw, 3.5rem)',
+                  fontSize: 'clamp(2rem, 5.5vw, 4rem)',
                 }}
               >
                 {student.name}
@@ -203,8 +203,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             onClick={downloadPNG}
             disabled={isDownloading}
             size="lg"
-            variant="outline"
-            className="flex-1 gap-2 text-white border-white/20 hover:bg-white/10"
+            className="flex-1 gap-2 bg-white text-dark gray border border-white hover:bg-gray-200 font-bold shadow-md transition-colors"
           >
             <FileImage className="h-5 w-5" />
             {isDownloading ? 'Processing...' : 'Download PNG'}
