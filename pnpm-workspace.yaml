@@ -1,0 +1,4 @@
+ignoredBuiltDependencies:
+  - canvas
+  - core-js
+  - sharp

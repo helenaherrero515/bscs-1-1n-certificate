@@ -1,0 +1,12 @@
+[
+  { "name": "Juan Dela Cruz", "student_id": "2025-00001-MN-0", "gpa": "1.25" },
+  { "name": "Maria Santos", "student_id": "2025-00002-MN-0", "gpa": "1.50" },
+  { "name": "Jose Rizal Jr.", "student_id": "2025-00003-MN-0", "gpa": "1.30" },
+  { "name": "Ana Marie Garcia", "student_id": "2025-00004-MN-0", "gpa": "1.55" },
+  { "name": "Carlos Reyes", "student_id": "2025-00005-MN-0", "gpa": "1.20" },
+  { "name": "Isabella Cruz", "student_id": "2025-00006-MN-0", "gpa": "1.60" },
+  { "name": "Miguel Antonio Torres", "student_id": "2025-00007-MN-0", "gpa": "1.28" },
+  { "name": "Sofia Ramirez", "student_id": "2025-00008-MN-0", "gpa": "1.45" },
+  { "name": "Alex Johnson", "student_id": "2025-00009-MN-0", "gpa": "1.85" },
+  { "name": "Helena Herrero", "student_id": "2025-00010-MN-0", "gpa": "1.95" }
+]
