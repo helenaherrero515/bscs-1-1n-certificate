@@ -151,7 +151,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
                 className="
                   font-bold text-white drop-shadow-lg
                   text-base            /* default mobile (≈16px) */
-                  sm:text-xl           /* ≥640px */
+                  sm:text-m           /* ≥640px */
                   md:text-2xl          /* ≥768px */
                   lg:text-[40px]       /* desktop */
                   leading-tight
@@ -166,9 +166,9 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
               <p
                 className="
                   text-white/90 font-medium
-                  text-xs               /* mobile */
-                  sm:text-sm
-                  md:text-base
+                  text-xxxs               /* mobile */
+                  sm:text-xs
+                  md:text-xss
                   lg:text-[15px]
                   mt-1
                   px-2
