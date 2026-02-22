@@ -12,38 +12,24 @@ interface Student {
 }
 
 const students: Student[] = studentsData as Student[]
-
 const POPPINS_BOLD_URL = "https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/Poppins-Bold.ttf"
 let poppinsBoldCache: ArrayBuffer | null = null
 
-function getAwardByGPA(gpa: string): "PL" | "DL" | "AA" {
-  const gpaNum = parseFloat(gpa)
-  if (gpaNum >= 1.0 && gpaNum <= 1.5) return "PL"
-  if (gpaNum > 1.5 && gpaNum <= 1.75) return "DL"
-  return "AA"
-}
-
-function getCertificateFileName(award: "PL" | "DL" | "AA"): string {
-  if (award === "PL") return "certificate_pl.png"
-  if (award === "DL") return "certificate_dl.png"
-  return "certificate_acad.png"
-}
-
-// COORDINATE FIX: Account for PDF Bottom-Up Coordinate System
+// FIXED COORDINATES: Synced for 1984x1240 Template
 const PDF_COORDINATES = {
   PAGE_WIDTH: 1984,
   PAGE_HEIGHT: 1240,
   CENTER_X: 992,
-  NAME_Y: 540,           // Adjusted for visual center-top from bottom
-  NAME_FONT_SIZE: 170,   // Locked for high-res background
-  GWA_Y: 480,            // Positioned below the name
-  GWA_FONT_SIZE: 29,
+  NAME_Y: 540,           // Centered vertically from bottom
+  NAME_FONT_SIZE: 170,   
+  GWA_Y: 480,            
+  GWA_FONT_SIZE: 29,     
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, student_id, gpa } = body
+    const { name, student_id, award } = body // Use award from body
 
     const student = students.find(
       (s) => s.name.toLowerCase() === name.toLowerCase() && s.student_id === student_id
@@ -53,9 +39,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Student verification failed" }, { status: 403 })
     }
 
-    const award = getAwardByGPA(student.gpa)
-    const certificateFileName = getCertificateFileName(award)
-    const certificatePath = path.join(process.cwd(), "public", "certificates", certificateFileName)
+    // Determine background based on award
+    const fileName = award === "PL" ? "certificate_pl.png" : award === "DL" ? "certificate_dl.png" : "certificate_acad.png"
+    const certificatePath = path.join(process.cwd(), "public", "certificates", fileName)
     const pngBytes = readFileSync(certificatePath)
 
     if (!poppinsBoldCache) {
@@ -68,28 +54,22 @@ export async function POST(request: NextRequest) {
     const poppinsFont = await pdfDoc.embedFont(poppinsBoldCache)
     const embeddedImage = await pdfDoc.embedPng(pngBytes)
 
-    // Add page at exact high-res dimensions
     const page = pdfDoc.addPage([PDF_COORDINATES.PAGE_WIDTH, PDF_COORDINATES.PAGE_HEIGHT])
-
-    page.drawImage(embeddedImage, {
-      x: 0,
-      y: 0,
-      width: PDF_COORDINATES.PAGE_WIDTH,
-      height: PDF_COORDINATES.PAGE_HEIGHT,
-    })
+    page.drawImage(embeddedImage, { x: 0, y: 0, width: PDF_COORDINATES.PAGE_WIDTH, height: PDF_COORDINATES.PAGE_HEIGHT })
 
     const navyBlue = rgb(0, 31 / 255, 63 / 255)
     const white = rgb(1, 1, 1)
 
-    // CALCULATE CENTERING: Manual width calculation
+    // Name Centering
     const nameWidth = poppinsFont.widthOfTextAtSize(name, PDF_COORDINATES.NAME_FONT_SIZE)
     const nameX = PDF_COORDINATES.CENTER_X - (nameWidth / 2)
 
-    const gwaText = `With a General Weighted Average (GWA) of ${gpa}`
+    // GWA Centering
+    const gwaText = `With a General Weighted Average (GWA) of ${student.gpa}`
     const gwaWidth = poppinsFont.widthOfTextAtSize(gwaText, PDF_COORDINATES.GWA_FONT_SIZE)
     const gwaX = PDF_COORDINATES.CENTER_X - (gwaWidth / 2)
 
-    // Draw Name Stroke (Thickness simulation)
+    // Draw Name with Bold Stroke
     const offsets = [[-1.5, 0], [1.5, 0], [0, -1.5], [0, 1.5]]
     for (const [dx, dy] of offsets) {
       page.drawText(name, {
@@ -101,26 +81,10 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Draw Main Name
-    page.drawText(name, {
-      x: nameX,
-      y: PDF_COORDINATES.NAME_Y,
-      size: PDF_COORDINATES.NAME_FONT_SIZE,
-      font: poppinsFont,
-      color: white,
-    })
-
-    // Draw GWA Text
-    page.drawText(gwaText, {
-      x: gwaX,
-      y: PDF_COORDINATES.GWA_Y,
-      size: PDF_COORDINATES.GWA_FONT_SIZE,
-      font: poppinsFont,
-      color: white,
-    })
+    page.drawText(name, { x: nameX, y: PDF_COORDINATES.NAME_Y, size: PDF_COORDINATES.NAME_FONT_SIZE, font: poppinsFont, color: white })
+    page.drawText(gwaText, { x: gwaX, y: PDF_COORDINATES.GWA_Y, size: PDF_COORDINATES.GWA_FONT_SIZE, font: poppinsFont, color: white })
 
     const pdfBytes = await pdfDoc.save()
-
     return new NextResponse(Buffer.from(pdfBytes), {
       status: 200,
       headers: {
@@ -129,7 +93,6 @@ export async function POST(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error("PDF generation error:", error)
     return NextResponse.json({ error: "Failed to generate PDF" }, { status: 500 })
   }
 }

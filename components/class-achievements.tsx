@@ -11,7 +11,7 @@ export function ClassAchievements() {
         <div className="flex items-start gap-3">
           <Trophy className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
           <div>
-            <p className="font-semibold text-white">{"Dean's Lister Ready"}</p>
+            <p className="font-semibold text-white">{"President's / Dean's Lister Ready"}</p>
             <p className="text-sm text-gray-400">
               {"High-resolution PDF generation enabled."}
             </p>
