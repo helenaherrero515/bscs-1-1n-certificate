@@ -48,7 +48,7 @@ function ResultContent() {
           <Button
             asChild
             variant="ghost"
-            className="group gap-2 text-white/90 hover:text-white hover:bg-white/10 w-fit backdrop-blur-sm"
+            className="group gap-2 text-white/90 hover:text-white hover:bg-white/20 w-fit backdrop-blur-sm"
           >
             <Link href="/">
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -56,7 +56,7 @@ function ResultContent() {
             </Link>
           </Button>
 
-          <div className="flex items-center gap-2 rounded-full border border-green-400/30 bg-green-500/20 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-green-300 backdrop-blur-sm w-fit">
+          <div className="flex items-center gap-2 rounded-full border hover:bg-white/10 border-green-400/30 bg-green-500/45 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-green-300 backdrop-blur-sm w-fit">
             <ShieldCheck className="h-3.5 w-3.5 flex-shrink-0" />
             <span className="hidden sm:inline">Verified Student Record</span>
             <span className="sm:hidden">Verified</span>
