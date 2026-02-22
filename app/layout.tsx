@@ -20,7 +20,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'BSCS 1-1N | Congrats, Klasmeyt!',
+  title: 'PUP BSCS 1-1N Certificate Portal',
   description:
     "Get your President's Lister & Dean's Lister certificate here. BSCS 1-1N, CTRL+ 1-1N.",
 }
