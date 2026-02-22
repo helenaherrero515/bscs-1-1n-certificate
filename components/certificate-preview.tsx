@@ -149,14 +149,14 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
                 
                 <p
                   className="font-bold text-white drop-shadow-lg
-                             text-[5vw] sm:text-[3vw] lg:text-[40px]"
+                             text-[5vw] sm:text-[3vw] lg:text-[30px]"
                   style={{ WebkitTextStroke: '1px #001F3F' }}
                 >
                   {student.name}
                 </p>
 
                 <p className="text-white/90 font-medium 
-                              text-[2.5vw] sm:text-[1.5vw] lg:text-[15px]">
+                              text-[2.5vw] sm:text-[1.5vw] lg:text-[8px]">
                   With a General Weighted Average (GWA) of {student.gpa}
                 </p>
 
