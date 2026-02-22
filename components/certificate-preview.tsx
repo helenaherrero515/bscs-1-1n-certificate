@@ -145,7 +145,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             <div className="absolute inset-0 pointer-events-none select-none">
               
               {/* 🔥 Adjust this percentage to move text up/down */}
-              <div className="absolute top-[100%] sm:top-[58%] w-full text-center px-4 -translate-y-12">
+              <div className="absolute top-[55%] sm:top-[58%] w-full text-center px-4 -translate-y-12">
                 
               <p
                 className="
