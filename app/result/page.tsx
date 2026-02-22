@@ -40,6 +40,7 @@ function ResultContent() {
 
   return (
     <main className="flex flex-1 items-center justify-center py-6 px-4 sm:py-8">
+      {/* Container max-width restored to 4xl for better centering without the side card */}
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
 
         {/* Top Navigation & Status */}
@@ -47,7 +48,7 @@ function ResultContent() {
           <Button
             asChild
             variant="ghost"
-            className="group gap-2 text-white/90 hover:text-white hover:bg-white/10 w-fit"
+            className="group gap-2 text-white/90 hover:text-white hover:bg-white/10 w-fit backdrop-blur-sm"
           >
             <Link href="/">
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -62,8 +63,10 @@ function ResultContent() {
           </div>
         </div>
 
-        {/* Certificate Display Area */}
-        <CertificatePreview student={student} />
+        {/* REVISED: Removed grid layout to only show the Certificate Preview */}
+        <div className="w-full">
+          <CertificatePreview student={student} />
+        </div>
 
       </div>
     </main>
@@ -79,8 +82,8 @@ export default function ResultPage() {
         style={{ backgroundImage: "url('/web_background.png')" }}
         aria-hidden="true"
       />
-      {/* Fixed dark overlay to make the result card pop */}
-      <div className="fixed inset-0 -z-10 bg-black/10" aria-hidden="true" />
+      {/* Darker overlay for better contrast on mobile */}
+      <div className="fixed inset-0 -z-10 bg-black/40" aria-hidden="true" />
 
       <Header />
 
