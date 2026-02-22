@@ -20,9 +20,9 @@ const PDF_COORDINATES = {
   PAGE_WIDTH: 1984,
   PAGE_HEIGHT: 1240,
   CENTER_X: 992,
-  NAME_Y: 540,           // Centered vertically from bottom
-  NAME_FONT_SIZE: 170,   
-  GWA_Y: 480,            
+  NAME_Y: 565,           // Centered vertically from bottom
+  NAME_FONT_SIZE: 120,   
+  GWA_Y: 475,            
   GWA_FONT_SIZE: 29,     
 }
 

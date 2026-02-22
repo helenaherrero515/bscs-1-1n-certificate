@@ -131,11 +131,11 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             />
             {/* Overlay with Independent Margins */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
-                <div className="w-full text-center" style={{ marginTop: '1%' }}>
+                <div className="w-full text-center" style={{ marginTop: '3.5%' }}>
                  <p
                    className="font-bold text-white px-4 drop-shadow-lg"
                    style={{
-                     fontSize: 'min(7vw, 80px)',
+                     fontSize: 'min(7vw, 50px)',
                      WebkitTextStroke: 'min(0.15vw, 1px) #001F3F',
                      marginTop: '0px'
                    }}
@@ -147,7 +147,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
                    style={{ 
                      fontSize: 'min(1.6vw, 15px)', 
                      fontFamily: 'Arial, sans-serif',
-                     marginTop: '-2.5%' 
+                     marginTop: '-1%' 
                    }}
                  >
                    With a General Weighted Average (GWA) of {student.gpa}
