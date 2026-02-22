@@ -145,20 +145,37 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             <div className="absolute inset-0 pointer-events-none select-none">
               
               {/* 🔥 Adjust this percentage to move text up/down */}
-              <div className="absolute top-[55%] sm:top-[55%] w-full text-center px-4 -translate-y-12">
+              <div className="absolute top-[100%] sm:top-[58%] w-full text-center px-4 -translate-y-12">
                 
-                <p
-                  className="font-bold text-white drop-shadow-lg
-                             text-[5vw] sm:text-[3vw] lg:text-[30px]"
-                  style={{ WebkitTextStroke: '1px #001F3F' }}
-                >
-                  {student.name}
-                </p>
+              <p
+                className="
+                  font-bold text-white drop-shadow-lg
+                  text-base            /* default mobile (≈16px) */
+                  sm:text-xl           /* ≥640px */
+                  md:text-2xl          /* ≥768px */
+                  lg:text-[40px]       /* desktop */
+                  leading-tight
+                  break-words
+                  px-2
+                "
+                style={{ WebkitTextStroke: '1px #001F3F' }}
+              >
+                {student.name}
+              </p>
 
-                <p className="text-white/90 font-medium 
-                              text-[2.5vw] sm:text-[1.5vw] lg:text-[8px]">
-                  With a General Weighted Average (GWA) of {student.gpa}
-                </p>
+              <p
+                className="
+                  text-white/90 font-medium
+                  text-xs               /* mobile */
+                  sm:text-sm
+                  md:text-base
+                  lg:text-[15px]
+                  mt-1
+                  px-2
+                "
+              >
+                With a General Weighted Average (GWA) of {student.gpa}
+              </p>
 
               </div>
             </div>
