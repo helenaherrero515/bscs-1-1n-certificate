@@ -135,7 +135,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
                  <p
                    className="font-bold text-white px-4 drop-shadow-lg"
                    style={{
-                     fontSize: 'min(7vw, 50px)',
+                     fontSize: 'min(7vw, 40px)',
                      WebkitTextStroke: 'min(0.15vw, 1px) #001F3F',
                      marginTop: '0px'
                    }}
