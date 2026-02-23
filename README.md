@@ -17,8 +17,6 @@ Students verify their identity using their full name and student ID, then receiv
 - **Next.js** (App Router)
 - **React 18**
 - **Tailwind CSS** + **shadcn/ui**
-- **pdf-lib** + **@pdf-lib/fontkit** for PDF generation
-- **Poppins** + **Inter** + **Playfair Display** (Google Fonts)
 
 ## Project Structure
 
