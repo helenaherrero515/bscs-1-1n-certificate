@@ -34,14 +34,31 @@ export default function Home() {
           <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-8 items-start">
             
             {/* Left Side: The Form */}
-            <section className="flex flex-col gap-4 rounded-2xl bg-white/10 p-6 backdrop-blur-xl border border-white/20 shadow-2xl animate-in fade-in slide-in-from-left-8 duration-1000">
+            <section 
+              className="
+                flex flex-col gap-4 rounded-2xl bg-white/10 p-6 backdrop-blur-xl 
+                border border-white/20 shadow-2xl 
+                animate-in fade-in slide-in-from-left-8 duration-1000
+                transition-all duration-500 ease-in-out
+                hover:border-white/40 
+                hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]
+                hover:bg-white/15
+              "
+            >
               <h2 className="text-lg font-semibold text-white">Find Your Certificate</h2>
               <p className="text-sm text-white/60 mb-2">Enter your name or student ID as it appears in the class record.</p>
               <CertificateForm />
             </section>
 
-            {/* Right Side: Feature Highlight */}
-            <section className="hidden md:block animate-in fade-in slide-in-from-right-8 duration-1000">
+            {/* Right Side: Feature Highlight (Now visible on mobile) */}
+            <section 
+              className="
+                block animate-in fade-in slide-in-from-right-8 duration-1000
+                transition-all duration-500 ease-in-out
+                hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]
+                rounded-xl
+              "
+            >
               <ClassAchievements />
             </section>
           </div>

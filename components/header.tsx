@@ -12,14 +12,16 @@ export function Header() {
           asChild
           variant="outline"
           size="sm"
-          className="gap-2 border-card-foreground/20 bg-card/60 text-card-foreground hover:bg-card hover:text-card-foreground"
+          className="gap-2 border-card-foreground/20 bg-card/90 text-card-foreground transition-all duration-300 
+                     hover:border-[#1877F2]/50 hover:bg-[#1877F2]/90 hover:text-[#FFFFFF] 
+                     hover:shadow-[0_0_15px_rgba(24,119,242,0.4)]"
         >
           <a
             href="https://www.facebook.com/profile.php?id=61578850288922"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Facebook className="h-4 w-4" />
+            <Facebook className="h-4 w-4 fill-current" />
             <span className="hidden sm:inline">Facebook Page</span>
           </a>
         </Button>
