@@ -5,16 +5,10 @@ interface Student {
   name: string
   student_id: string
   gpa: string
+  award: "PL" | "DL" | "AA" // Added award to the interface
 }
 
 const students: Student[] = studentsData as Student[]
-
-function getAwardByGPA(gpa: string): "PL" | "DL" | "AA" {
-  const gpaNum = parseFloat(gpa)
-  if (gpaNum >= 1.0 && gpaNum <= 1.5) return "PL"
-  if (gpaNum > 1.5 && gpaNum <= 1.75) return "DL"
-  return "AA"
-}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl
@@ -28,6 +22,7 @@ export async function GET(request: NextRequest) {
     )
   }
 
+  // Verification pattern for PUP Student IDs [cite: 7, 8]
   const pattern = /^2025-\d{5}-MN-0$/
   if (!pattern.test(studentId)) {
     return NextResponse.json(
@@ -45,14 +40,13 @@ export async function GET(request: NextRequest) {
   if (!student) {
     return NextResponse.json(
       {
-        error:
-          "Student not found. Please check your name and ID, or contact your block representative.",
+        error: "Student not found. Please check your name and ID.",
       },
       { status: 404 }
     )
   }
 
-  const award = getAwardByGPA(student.gpa)
-
-  return NextResponse.json({ student: { ...student, award } })
+  // FIX: Return the student exactly as they appear in students.json
+  // This ensures Fricea gets "DL" because that's what is written in your data.
+  return NextResponse.json({ student })
 }

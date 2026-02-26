@@ -16,22 +16,23 @@ const students: Student[] = studentsData as Student[]
 const POPPINS_BOLD_URL = "https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/Poppins-Bold.ttf"
 let poppinsBoldCache: ArrayBuffer | null = null
 
-// FIXED COORDINATES: Synced for 1984x1240 Template
 const PDF_COORDINATES = {
   PAGE_WIDTH: 1984,
   PAGE_HEIGHT: 1240,
   CENTER_X: 992,
-  NAME_Y: 565,           // Centered vertically from bottom
-  NAME_FONT_SIZE: 120,   
-  GWA_Y: 475,            
-  GWA_FONT_SIZE: 29,     
+  NAME_Y: 565,
+  NAME_FONT_SIZE: 120,
+  GWA_Y: 475,
+  GWA_FONT_SIZE: 29,
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, student_id, award } = body // Use award from body
+    // We only need name and student_id to verify the identity
+    const { name, student_id } = body 
 
+    // Find the student in the local JSON data 
     const student = students.find(
       (s) => s.name.toLowerCase() === name.toLowerCase() && s.student_id === student_id
     )
@@ -40,8 +41,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Student verification failed" }, { status: 403 })
     }
 
-    // Determine background based on award
-    const fileName = award === "PL" ? "certificate_pl.png" : award === "DL" ? "certificate_dl.png" : "certificate_acad.png"
+    // FIX: Use student.award from the JSON file, not the request body
+    const fileName = student.award === "PL" 
+      ? "certificate_pl.png" 
+      : student.award === "DL" 
+        ? "certificate_dl.png" 
+        : "certificate_acad.png"
+    
     const certificatePath = path.join(process.cwd(), "public", "certificates", fileName)
     const pngBytes = readFileSync(certificatePath)
 
@@ -61,16 +67,13 @@ export async function POST(request: NextRequest) {
     const navyBlue = rgb(0, 31 / 255, 63 / 255)
     const white = rgb(1, 1, 1)
 
-    // Name Centering
     const nameWidth = poppinsFont.widthOfTextAtSize(name, PDF_COORDINATES.NAME_FONT_SIZE)
     const nameX = PDF_COORDINATES.CENTER_X - (nameWidth / 2)
 
-    // GWA Centering
     const gwaText = `With a General Weighted Average (GWA) of ${student.gpa}`
     const gwaWidth = poppinsFont.widthOfTextAtSize(gwaText, PDF_COORDINATES.GWA_FONT_SIZE)
     const gwaX = PDF_COORDINATES.CENTER_X - (gwaWidth / 2)
 
-    // Draw Name with Bold Stroke
     const offsets = [[-1.5, 0], [1.5, 0], [0, -1.5], [0, 1.5]]
     for (const [dx, dy] of offsets) {
       page.drawText(name, {
