@@ -33,5 +33,7 @@
   { "name": "Lord Ares Austria", "student_id": "2025-05173-MN-0", "gpa": "1.XX", "award": "PL" },
   { "name": "Christian Louianne Lili", "student_id": "2025-01227-MN-0", "gpa": "1.62", "award": "DL" },
   { "name": "James Rondel Calzada", "student_id": "2025-00678-MN-0", "gpa": "1.54", "award": "DL" },
-  { "name": "Judh Bryce P. Lobarbio", "student_id": "2025-00491-MN-0", "gpa": "1.3X", "award": "PL" }
+  { "name": "Judh Bryce P. Lobarbio", "student_id": "2025-00491-MN-0", "gpa": "1.3X", "award": "PL" },
+  { "name": "Fricea Meleigh Palaña", "student_id": "2025-17469-MN-0", "gpa": "1.9x", "award": "DL" },
+  { "name": "Joshua Emmanuel Verzosa", "student_id": "2025-06517-MN-0", "gpa": "1.46", "award": "PL" }
 ]
