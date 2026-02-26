@@ -73,7 +73,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
   }
 
   return (
-    <Card className="border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl overflow-hidden">
+    <Card className="border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl overflow-hidden transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]">
       <CardContent className="flex flex-col gap-6 pt-6">
 
         {/* Header */}
@@ -85,15 +85,22 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             </h3>
           </div>
 
-          <div className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-amber-200 text-center">
+          {/* Award Badge: Glows based on Award Category */}
+          <div className={`px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-center transition-all duration-300 cursor-default
+            ${student.award === 'PL' ? "text-amber-200 hover:border-amber-400/50 hover:shadow-[0_0_15px_rgba(251,191,36,0.3)] hover:bg-amber-400/10" : ""}
+            ${student.award === 'DL' ? "text-blue-300 hover:border-blue-400/50 hover:shadow-[0_0_15px_rgba(96,165,250,0.3)] hover:bg-blue-400/10" : ""}
+            ${student.award === 'AA' ? "text-purple-300 hover:border-purple-400/50 hover:shadow-[0_0_15px_rgba(192,132,252,0.3)] hover:bg-purple-400/10" : ""}
+          `}>
             {getAwardLabel()}
           </div>
         </div>
 
-        {/* Info Cards */}
+        {/* Info Cards: White Glow Hover Effect */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+          
+          {/* Student ID Card */}
+          <div className="group rounded-xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 transition-colors group-hover:text-white/70">
               Student ID
             </p>
             <div className="mt-1 flex items-center justify-between gap-2">
@@ -102,7 +109,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
               </p>
               <button
                 onClick={copyToClipboard}
-                className="text-white/40 hover:text-white transition"
+                className="text-white/40 hover:text-white transition-colors relative z-10"
               >
                 {copied ? (
                   <Check className="h-4 w-4 text-green-400" />
@@ -113,8 +120,9 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+          {/* GWA Card */}
+          <div className="group rounded-xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 transition-colors group-hover:text-white/70">
               GWA
             </p>
             <p className="mt-1 text-sm sm:text-lg font-bold text-white">
@@ -132,7 +140,7 @@ export function CertificatePreview({ student }: CertificatePreviewProps) {
             className={`w-full h-14 gap-3 text-base font-bold transition-all duration-300
               ${downloading
                 ? "bg-zinc-800 text-zinc-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-cyan-500 text-white active:scale-95"
+                : "bg-blue-600 hover:bg-cyan-500 text-white active:scale-95 shadow-lg hover:shadow-cyan-500/20"
               }
             `}
           >
