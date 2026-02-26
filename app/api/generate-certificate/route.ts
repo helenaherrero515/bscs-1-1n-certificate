@@ -9,6 +9,7 @@ interface Student {
   name: string
   student_id: string
   gpa: string
+  award: 'PL' | 'DL' | 'AA'
 }
 
 const students: Student[] = studentsData as Student[]
